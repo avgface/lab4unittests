@@ -1,7 +1,10 @@
-name: Run Python UnitTests on Push
+name: Geometry Unit Tests CI/CD
 
 on:
   push:
+    branches: [ main, master, lab4-unit-tests, lab5-ci-cd ]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
   test:
@@ -9,14 +12,22 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-      - name: Run unit tests (tests inside modules)
-        run: python -m unittest -v circle.py rectangle.py square.py triangle.py
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Run unit tests
+      shell: bash
+      run: |
+        for test_file in circle.py square.py rectangle.py triangle.py; do
+          python3 -m unittest "$test_file" -v || exit 1
+          echo "$test_file: УСПЕХ"
+        done
+        
+        echo "ВСЕ ТЕСТЫ УСПЕШНО ПРОЙДЕНЫ!"
