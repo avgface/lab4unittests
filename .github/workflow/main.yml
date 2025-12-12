@@ -2,9 +2,9 @@ name: Geometry Unit Tests CI/CD
 
 on:
   push:
-    branches: [ main, master, lab4-unit-tests, lab5-ci-cd ]
+    branches: [ new_features_505037 ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ new_features_505037 ]
 
 jobs:
   test:
