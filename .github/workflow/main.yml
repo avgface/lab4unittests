@@ -1,10 +1,7 @@
-name: Geometry Unit Tests CI/CD
+name: Run Python Unit Tests on Push
 
 on:
-  push:
-    branches: [ new_features_505037 ]
-  pull_request:
-    branches: [ new_features_505037 ]
+  push: [new_features_505037]
 
 jobs:
   test:
@@ -12,16 +9,19 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-    
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-    
-    - name: Run unit tests
-    run: |
-      python -m unittest circle.py square.py rectangle.py triangle.py -v
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run unit tests (tests inside modules)
+        run: |
+          python -m unittest -v circle
+          python -m unittest -v rectangle
+          python -m unittest -v square
+          python -m unittest -v triangle
