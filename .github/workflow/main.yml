@@ -23,11 +23,5 @@ jobs:
         python-version: '3.9'
     
     - name: Run unit tests
-      shell: bash
-      run: |
-        for test_file in circle.py square.py rectangle.py triangle.py; do
-          python3 -m unittest "$test_file" -v || exit 1
-          echo "$test_file: УСПЕХ"
-        done
-        
-        echo "ВСЕ ТЕСТЫ УСПЕШНО ПРОЙДЕНЫ!"
+    run: |
+      python -m unittest circle.py square.py rectangle.py triangle.py -v
